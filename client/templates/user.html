@@ -1,0 +1,12 @@
+    <template name="user">
+      <input type="button" id="signOut" value="Sign out" />
+      <h2>Your Information</h2>
+      <ul>
+        <li>Meteor ID:         {{currentUser._id}}</li>
+        <li>Name:              {{currentUser.profile.name}}</li>
+        <li>ID:                {{currentUser.services.twitter.id}}</li>
+        <li>Screen Name:       {{currentUser.services.twitter.screenName}}</li>
+        <li>Profile Image URL: {{currentUser.services.twitter.profile_image_url}}</li>
+        <li>Language:          {{currentUser.services.twitter.lang}}</li>
+      </ul>
+    </template>

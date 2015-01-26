@@ -1,0 +1,59 @@
+<template name="appBody">
+    <div class="container">
+	    <nav class="navbar navbar-fixed-top navbar-default">
+	      <div class="container">
+	        <div class="navbar-header">
+	          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	            <span class="sr-only">Toggle navigation</span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </button>
+	          <a class="navbar-brand" href="/">PienGames</a>
+	        </div>
+			<div id="navbar" class="navbar-collapse collapse">
+	        {{#if currentUser}}
+	          <ul class="nav navbar-nav navbar-right">
+	          	<img src="{{currentUser.services.twitter.profile_image_url}}">
+	            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Welcome, {{currentUser.profile.name}} <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Profile</a></li>
+                <li class="divider"></li>
+                <li><a class="signout">Sign out</a></li>
+              </ul>
+            </li>
+	          </ul>
+	        {{else}}
+			<ul class="nav navbar-nav navbar-right">
+            	<li><a class="join">Join</a></li>
+            	<li><a class="signin">Sign in</a></li>
+          	</ul>
+	        {{/if}}
+	        </div><!--/.navbar-collapse -->
+	      </div>
+	    </nav>
+        Cards
+        {{#if card.count}}
+        <table>
+            {{#each card}}
+            <tr>
+                <td>
+                    {{ name }} of {{ Suite.name }}
+                </td>
+            </tr>
+            {{/each}}
+        </table>
+        <br>
+        Suite
+        {{ suite.name }} 
+        
+          
+        
+    {{/if}}
+
+		{{> yield}}
+		<footer>
+        	<p>&copy; Company 2014</p>
+      	</footer>
+    </div> <!-- /container -->
+</template>
