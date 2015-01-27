@@ -1,40 +1,35 @@
 Template.signInWithOtherServices.events({
   'click .twitterSignIn' : function() {
-    Meteor.loginWithTwitter(function(error){
-      if(error != undefined){
-        console.log(error);
-      }
-      Router.go('/');
-    });
+    Meteor.loginWithTwitter(login);
   }
 });
 
+var login = function(error){
+  if(error != undefined){
+    console.log(error);
+  } else {
+    Router.go('gameboard');
+  }
+}
+
+var logout = function(error){
+    if(error != undefined){
+    console.log(error);
+  } else {
+    Router.go('/');
+  }
+}
+
 Template.signInWithOtherServices.events({
   'click .googleSignIn' : function() {
-    Meteor.loginWithGoogle(function(error){
-      if(error != undefined){
-        console.log(error);
-      }
-      Router.go('/');
-    });
+    Meteor.loginWithGoogle(login);
   }
 });
 
 
 Template.join.events({
   'click #twitterSignIn' : function() {
-    Meteor.loginWithTwitter(function(error){
-      if(error != undefined){
-        console.log(error);
-      }
-      Router.go('/');
-    });
-  }
-});
-
-Template.user.events({
-  'click #signOut' : function() {
-    Meteor.logout();
+    Meteor.loginWithTwitter(login);
   }
 });
 
@@ -64,7 +59,7 @@ Template.join.events({
         {
           $(".form-signin-heading").before($("<div>" + data.reason + "</div>").addClass("alert alert-danger"));
         } else {
-          Router.go('/');
+          Router.go('/gameboard');
         }
       });
     } 
@@ -87,7 +82,7 @@ Template.signin.events({
           if(data != undefined){
             $(".form-signin-heading").before($("<div>" + data.reason + "</div>").addClass("alert alert-danger"));
           } else {
-            Router.go('/');
+            Router.go('/gameboard');
           }
         });
     } else {
@@ -99,7 +94,7 @@ Template.signin.events({
 Template.appBody.events({  
   'click a.signout': function(event, template) {
       event.preventDefault();
-      Meteor.logout();
+      Meteor.logout(logout);
   }
 });
 
@@ -118,23 +113,28 @@ Template.appBody.events({
   }
 });
 
-Template.appBody.helpers({  
+Template.gameboard.helpers({  
   card: function() {
-    return Card.find({}, 
+    return Card.find({});
+  },
+  suite: function() {
+    return Suite.findOne({});
+  },
+  trick: function(){
+      var trick = Card.find({}, 
       { 
         sort  : { cardId : 1 }, 
         limit : 4, 
         skip  : Card.find().count() * Math.random()  
       });
-  },
-  suite: function() {
-    return Suite.findOne({},
+
+      var trump = Suite.findOne({},
       {
         skip  : Suite.find().count() * Math.random()  
       });
-  },
-  count: function(){
-    return Card.find().count();
+
+      trick.trump = trump;
+      return trick;
   }
 });
 

@@ -24,6 +24,7 @@ Meteor.startup(function () {
     });
 
     Meteor.call('getDeck');
+    Meteor.call('getRules');
 });
 
 Meteor.publish('card', function(query) {  
@@ -39,7 +40,6 @@ Meteor.methods({
         this.unblock();
         try {
           var response =  HTTP.get('https://fortyfives.herokuapp.com/api/deck');
-
             Suite.remove({});
 
             _.each(response.data.suites, function(suite) {
@@ -53,12 +53,33 @@ Meteor.methods({
               card.Suite = suite;
               Card.insert(card);
             });
-
-            console.log(Math.random());
-
         } catch(error) {
           console.log(error);
         }
+    },
+    getRules: function(){
+      this.unblock();
+      try {
+        var response =  HTTP.get('https://fortyfives.herokuapp.com/api/rules');
+
+        Rule.remove({});
+
+        var x = 0;
+
+        _.each(response.data, function(item) {
+
+          if(x < 4){
+            item.isTrump = true;
+          } else {
+            item.isTrump = false;
+          }
+          
+          console.log(item);
+          x++;
+        });
+      } catch(error) {
+        console.log(error);
+      }
     }
 });
 

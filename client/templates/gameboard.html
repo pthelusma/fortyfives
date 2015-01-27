@@ -1,0 +1,17 @@
+<template name="gameboard">        
+    {{#if trick.count}}
+    Cards
+    <table>
+        {{#each trick}}
+        <tr>
+            <td>
+                {{ name }} of {{ Suite.name }}
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+    <br>
+    Suite
+    {{ trick.trump.name }} 
+    {{/if}}
+</template>
