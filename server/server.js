@@ -27,13 +27,30 @@ Meteor.startup(function () {
     Meteor.call('getRules');
 });
 
-Meteor.publish('card', function(query) {  
+Meteor.publish('card', function() {  
   return Card.find();
 });
 
-Meteor.publish('suite', function(query) {  
+Meteor.publish('suite', function() {  
   return Suite.find();
 });
+
+Meteor.publish('message', function() {  
+  return Message.find();
+});
+
+Meteor.publish('game', function() {  
+  return Game.find({ $or: 
+    [
+      { visibility: 'public' },
+      { owner: this.userId }
+    ]});
+});
+
+Meteor.publish('gamemessage', function(gameId) {
+    return Message.find({ gameId : gameId });
+});
+
 
 Meteor.methods({
     getDeck: function () {
