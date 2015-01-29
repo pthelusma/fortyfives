@@ -5,20 +5,27 @@
 
 <!-- Chat Box with chat messages and the input box -->
 <template name='chatBox'>
-    <div class="messages-container">
-        <div class="messages">
+
+    <div class="col-sm-7">
+    </div>
+
+    <div class="messages-container col-sm-4 col-sm-offset-1">
+        <div class="messages" id="pierre">
             {{#if messages}}
                 {{#each messages}}
                 <p>
                     <span class="username">{{name}}:</span>
-                    {{text}}-<span data-livestamp="{{creation_date}}"></span>
+                    {{text}}
+                    <br>
+                    <span data-livestamp="{{creation_date}}"></span>
                 </p>
                 {{/each}}
             {{/if}}
-        </div>
+        </div>  
+        <textarea id='text' class="form-control message" placeholder="Write a message"></textarea><br>
+        <button class='btn btn-primary' id='send'>Send</button>
     </div>
-  <textarea id='text' class="form-control message" placeholder="Write a message"></textarea><br>
-  <button class='btn btn-primary' id='send'>Send</button>
+
 </template>
  
 <!-- Template for the individual chat message -->

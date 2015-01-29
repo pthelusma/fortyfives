@@ -145,6 +145,15 @@ Template.chatBox.events({
   }
 });
 
+Template.chatBox.rendered = function(){
+  this.autorun(function(){
+    var message = Message.find({ gameId: Session.get('gameId') }).fetch();
+    var messageDiv = $("#pierre");
+    messageDiv.scrollTop(messageDiv[0].scrollHeight);
+
+  });
+}
+
 
 Template.gameboard.helpers({  
   card: function() {
